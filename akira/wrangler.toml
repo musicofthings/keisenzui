@@ -1,0 +1,33 @@
+name = "akira"
+main = "worker/index.ts"
+compatibility_date = "2026-04-30"
+
+[[durable_objects.bindings]]
+name = "SESSIONS"
+class_name = "SessionDO"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["SessionDO"]
+
+[[queues.producers]]
+binding = "TRANSCRIPT_QUEUE"
+queue = "akira-transcripts"
+
+[[queues.consumers]]
+queue = "akira-transcripts"
+max_batch_size = 10
+max_batch_timeout = 2
+
+[[kv_namespaces]]
+binding = "AKIRA_KV"
+id = "replace-with-kv-id"
+
+[[r2_buckets]]
+binding = "AKIRA_R2"
+bucket_name = "akira-artifacts"
+
+[vars]
+DEEPGRAM_API_KEY = ""
+OPENAI_API_KEY = ""
+ANTHROPIC_API_KEY = ""
